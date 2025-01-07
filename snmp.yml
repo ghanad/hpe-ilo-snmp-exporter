@@ -1,0 +1,635 @@
+# version 3.11
+# use index in hpe Physical drive
+
+auths:
+  public_v1:
+    community: public
+    security_level: noAuthNoPriv
+    auth_protocol: MD5
+    priv_protocol: DES
+    version: 1
+  public_v2:
+    community: public
+    security_level: noAuthNoPriv
+    auth_protocol: MD5
+    priv_protocol: DES
+    version: 2
+modules:
+  hpe:
+    walk:
+    - 1.3.6.1.4.1.232.1.2.2.1
+    - 1.3.6.1.4.1.232.3.2.3.1.1
+    - 1.3.6.1.4.1.232.6.2.6.7
+    - 1.3.6.1.4.1.232.6.2.6.8
+    - 1.3.6.1.4.1.232.6.2.9.3.1
+    - 1.3.6.1.4.1.232.6.2.14.13.1.6
+    - 1.3.6.1.4.1.232.6.2.14.13.1.13
+    - 1.3.6.1.4.1.232.6.2.14.13.1.19
+    - 1.3.6.1.4.1.232.6.2.14.13.1.20
+    - 1.3.6.1.4.1.232.3.2.5.1.1
+    - 1.3.6.1.4.1.232.3.2.2.2.1
+    - 1.3.6.1.4.1.232.18.2.3.1.1
+    get:
+    - 1.3.6.1.2.1.1.3.0
+    - 1.3.6.1.4.1.232.2.2.4.2.0
+    - 1.3.6.1.2.1.1.5.0
+    - 1.3.6.1.4.1.232.6.1.3.0
+    - 1.3.6.1.4.1.232.9.2.2.2.0
+    - 1.3.6.1.4.1.232.2.2.4.12.0
+    metrics:
+    - name: sysUpTime
+      oid: 1.3.6.1.2.1.1.3
+      type: gauge
+      help: The time (in hundredths of a second) since the network management portion
+        of the system was last re-initialized. - 1.3.6.1.2.1.1.3
+    - name: hpProductName
+      oid: 1.3.6.1.4.1.232.2.2.4.2.0
+      type: DisplayString
+      help: product name.
+    - name: hpiLOsystemName
+      oid: 1.3.6.1.2.1.1.5.0
+      type: DisplayString
+      help: hp ilo system name 
+    - name: hpiLOoveralHealth
+      type: gauge
+      oid: 1.3.6.1.4.1.232.6.1.3.0
+      help: hp iLO overal health
+    - name: hpiLOFirmwareVersion
+      type: DisplayString
+      oid: 1.3.6.1.4.1.232.9.2.2.2.0
+      help: hp iLO firmware version
+    - name: hpiLOPowerMgmtStatus
+      type: gauge
+      oid: 1.3.6.1.4.1.232.2.2.4.12.0
+      help: The state of power management
+
+    ###  Fan
+    - name: cpqHeFltTolFanCondition
+      oid: 1.3.6.1.4.1.232.6.2.6.7.1.9.0
+      type: gauge
+      help: The condition of the fan
+      indexes:
+        - labelname: fanID
+          type: gauge
+      enum_values:
+        1: other
+        2: ok
+        3: degraded
+        4: failed
+    - name: cpqHeFltTolFanPresent
+      oid: 1.3.6.1.4.1.232.6.2.6.7.1.4.0
+      type: gauge
+      help: This specifies if the fan described is present in the system
+      indexes:
+        - labelname: fanID
+          type: gauge
+
+    # temprature
+    - name: cpqHeTemperatureCelsius
+      oid: 1.3.6.1.4.1.232.6.2.6.8.1.4.0
+      type: gauge
+      help: HP current temperature sensor reading in degrees celsius.
+      indexes:
+        - labelname: sensorID
+          type: gauge
+      lookups:
+      - labels:
+        - sensorID
+        labelname: locale
+        oid: 1.3.6.1.4.1.232.6.2.6.8.1.3.0
+        type: DisplayString
+    - name: cpqHeTemperatureCondition
+      oid: 1.3.6.1.4.1.232.6.2.6.8.1.6.0
+      type: gauge
+      help: The Temperature sensor condition
+      indexes:
+        - labelname: sensorID
+          type: gauge
+      lookups:
+      - labels:
+        - sensorID
+        labelname: locale
+        oid: 1.3.6.1.4.1.232.6.2.6.8.1.3.0
+        type: DisplayString
+      enum_values:
+        1: other
+        2: ok
+        3: degraded
+        4: failed
+    - name: cpqHeTemperatureThreshold
+      oid: 1.3.6.1.4.1.232.6.2.6.8.1.5.0
+      type: gauge
+      help: The Temperature sensor thereshold
+      indexes:
+        - labelname: sensorID
+          type: gauge
+      lookups:
+      - labels:
+        - sensorID
+        labelname: locale
+        oid: 1.3.6.1.4.1.232.6.2.6.8.1.3.0
+        type: DisplayString
+    # Power
+#    - name: cpqHeFltTolPowerSupplyChassis
+#      oid: 1.3.6.1.4.1.232.6.2.9.3.1.1
+#      type: gauge
+#      help: The system chassis number. - 1.3.6.1.4.1.232.6.2.9.3.1.1
+#      indexes:
+#      - labelname: cpqHeFltTolPowerSupplyChassis
+#        type: gauge
+#      - labelname: cpqHeFltTolPowerSupplyBay
+#        type: gauge
+#    - name: cpqHeFltTolPowerSupplyBay
+#      oid: 1.3.6.1.4.1.232.6.2.9.3.1.2
+#      type: gauge
+#      help: The bay number to index within this chassis. - 1.3.6.1.4.1.232.6.2.9.3.1.2
+#      indexes:
+#      - labelname: cpqHeFltTolPowerSupplyChassis
+#        type: gauge
+#      - labelname: cpqHeFltTolPowerSupplyBay
+#        type: gauge
+#
+
+    - name: cpqHeFltTolPowerSupplyPresent
+      oid: 1.3.6.1.4.1.232.6.2.9.3.1.3.0
+      type: gauge
+      help: Indicates whether the power supply is present in the chassis. - 1.3.6.1.4.1.232.6.2.9.3.1.3
+      indexes:
+      - labelname: bay
+        type: gauge
+      lookups:
+      - labels:
+        - bay
+        labelname: bay
+        oid: 1.3.6.1.4.1.232.6.2.9.3.1.2.0
+        type: DisplayString
+      enum_values:
+        1: other
+        2: absent
+        3: present
+    - name: cpqHeFltTolPowerSupplyCondition
+      oid: 1.3.6.1.4.1.232.6.2.9.3.1.4.0
+      type: gauge
+      help: The condition of the power supply
+      indexes:
+      - labelname: bay
+        type: gauge
+      lookups:
+      - labels:
+        - bay
+        labelname: bay
+        oid: 1.3.6.1.4.1.232.6.2.9.3.1.2.0
+        type: DisplayString
+      enum_values:
+        1: other
+        2: ok
+        3: degraded
+        4: failed
+    - name: cpqHeFltTolPowerSupplyStatus
+      oid: 1.3.6.1.4.1.232.6.2.9.3.1.5.0
+      type: gauge
+      help: The status of the power supply
+      indexes:
+      - labelname: bay
+        type: gauge
+      lookups:
+      - labels:
+        - bay
+        labelname: bay
+        oid: 1.3.6.1.4.1.232.6.2.9.3.1.2.0
+        type: DisplayString
+      enum_values:
+        1: noError
+        2: generalFailure
+        3: bistFailure
+        4: fanFailure
+        5: tempFailure
+        6: interlockOpen
+        7: epromFailed
+        8: vrefFailed
+        9: dacFailed
+        10: ramTestFailed
+        11: voltageChannelFailed
+        12: orringdiodeFailed
+        13: brownOut
+        14: giveupOnStartup
+        15: nvramInvalid
+        16: calibrationTableInvalid
+        17: noPowerInput
+
+    - name: cpqHeFltTolPowerSupplyMainVoltage
+      oid: 1.3.6.1.4.1.232.6.2.9.3.1.6.0
+      type: gauge
+      help: The input main voltage of the power supply in volts
+      indexes:
+      - labelname: bay
+        type: gauge
+      lookups:
+      - labels:
+        - bay
+        labelname: bay
+        oid: 1.3.6.1.4.1.232.6.2.9.3.1.2.0
+        type: DisplayString
+    - name: cpqHeFltTolPowerSupplyCapacityUsed
+      oid: 1.3.6.1.4.1.232.6.2.9.3.1.7.0
+      type: gauge
+      help: The currently used capacity of the power supply in watts
+      indexes:
+      - labelname: bay
+        type: gauge
+      lookups:
+      - labels:
+        - bay
+        labelname: bay
+        oid: 1.3.6.1.4.1.232.6.2.9.3.1.2.0
+        type: DisplayString
+    - name: cpqHeFltTolPowerSupplyCapacityMaximum
+      oid: 1.3.6.1.4.1.232.6.2.9.3.1.8.0
+      type: gauge
+      help: The maximum capacity of the power supply in watts.
+      indexes:
+      - labelname: bay
+        type: gauge
+      lookups:
+      - labels:
+        - bay
+        labelname: bay
+        oid: 1.3.6.1.4.1.232.6.2.9.3.1.2.0
+        type: DisplayString
+    - name: cpqHeFltTolPowerSupplyRedundant
+      oid: 1.3.6.1.4.1.232.6.2.9.3.1.9.0
+      type: gauge
+      help: The redundancy state of the power supply
+      indexes:
+      - labelname: bay
+        type: gauge
+      lookups:
+      - labels:
+        - bay
+        labelname: bay
+        oid: 1.3.6.1.4.1.232.6.2.9.3.1.2.0
+        type: DisplayString
+      enum_values:
+        1: other
+        2: notRedundant
+        3: redundant
+    - name: cpqHeFltTolPowerSupplyHwLocation
+      oid: 1.3.6.1.4.1.232.6.2.9.3.1.15.0
+      type: DisplayString
+      help: A text description of the hardware location, on complex multi SBB hardware
+        only, for the power supply - 1.3.6.1.4.1.232.6.2.9.3.1.15.0
+      indexes:
+      - labelname: bay
+        type: gauge
+      lookups:
+      - labels:
+        - bay
+        labelname: bay
+        oid: 1.3.6.1.4.1.232.6.2.9.3.1.2.0
+        type: DisplayString
+    - name: cpqHeFltTolPowerSupplyRedundantPartner
+      oid: 1.3.6.1.4.1.232.6.2.9.3.1.17.0
+      type: gauge
+      help: This specifies the index of the redundant partner
+      indexes:
+      - labelname: bay
+        type: gauge
+      lookups:
+      - labels:
+        - bay
+        labelname: bay
+        oid: 1.3.6.1.4.1.232.6.2.9.3.1.2.0
+        type: DisplayString
+    - name: cpqHeFltTolPowerSupplyErrorCondition
+      oid: 1.3.6.1.4.1.232.6.2.9.3.1.18.0
+      type: gauge
+      help: The Error condition of the power supply.
+      indexes:
+      - labelname: bay
+        type: gauge
+      lookups:
+      - labels:
+        - bay
+        labelname: bay
+        oid: 1.3.6.1.4.1.232.6.2.9.3.1.2.0
+        type: DisplayString
+      enum_values:
+        1: noError
+        2: generalFailure
+        3: overvoltage
+        4: overcurrent
+        5: overtemperature
+        6: powerinputloss
+        7: fanfailure
+        8: vinhighwarning
+        9: vinlowwarning
+        10: vouthighwarning
+        11: voutlowwarning
+        12: inlettemphighwarning
+        13: iinternaltemphighwarning
+        14: vauxhighwarning
+        15: vauxlowwarning
+        16: powersupplymismatch
+        17: goodinstandby
+    ## memory
+    - name: cpqHeResMem2ModuleStatus
+      oid: 1.3.6.1.4.1.232.6.2.14.13.1.19
+      type: gauge
+      help: current status of the correctable memory errors for this memory module
+      indexes:
+      - labelname: location
+        type: gauge
+      lookups:
+      - labels:
+        - location
+        labelname: location
+        oid: 1.3.6.1.4.1.232.6.2.14.13.1.13
+        type: DisplayString
+      enum_values:
+        1: other
+        2: notPresent
+        3: present
+        4: good
+        5: add
+        6: upgrade
+        7: missing
+        8: doesNotMatch
+        9: notSupported
+        10: badConfig
+        11: degraded
+    - name: cpqHeResMem2ModuleCondition
+      oid: 1.3.6.1.4.1.232.6.2.14.13.1.20
+      type: gauge
+      help: current status of the correctable memory errors for this memory module
+      indexes:
+      - labelname: location
+        type: gauge
+      lookups:
+      - labels:
+        - location
+        labelname: location
+        oid: 1.3.6.1.4.1.232.6.2.14.13.1.13
+        type: DisplayString
+      enum_values:
+        1: other
+        2: ok
+        3: degraded
+        4: degradedModuleIndexUnknown
+    - name: cpqHeResMem2ModuleSize
+      oid: 1.3.6.1.4.1.232.6.2.14.13.1.6
+      type: gauge
+      help: Module memory size in kilobytes.  A kilobyte of memory is defined as 1024 bytes
+      indexes:
+      - labelname: location
+        type: gauge
+      lookups:
+      - labels:
+        - location
+        labelname: location
+        oid: 1.3.6.1.4.1.232.6.2.14.13.1.13
+        type: DisplayString
+
+    ## NIC
+    - name: cpqNicIfPhysAdapterStatus
+      oid: 1.3.6.1.4.1.232.18.2.3.1.1.14
+      type: gauge
+      help: current status of the NIC 
+      indexes:
+      - labelname: id
+        type: gauge
+      lookups:
+      - labels:
+        - id
+        labelname: location
+        oid: 1.3.6.1.4.1.232.18.2.3.1.1.39
+        type: DisplayString
+      enum_values:
+        1: unknown 
+        2: ok
+        3: generalFailure
+        4: linkFailure
+
+    ###### Disk
+    ## Physical Drive Reference Hours
+    - name: cpqDaPhyDrvRefHours
+      oid: 1.3.6.1.4.1.232.3.2.5.1.1.9
+      type: gauge
+      help: Physical Drive Reference Time in hours.
+      indexes:
+      - labelname: controller
+        type: gauge
+        fixed_size: 1
+      - labelname: drive
+        type: gauge
+      lookups:
+      - labels:
+        - controller
+        - drive
+        labelname: location
+        oid: 1.3.6.1.4.1.232.3.2.5.1.1.64
+        type: DisplayString
+
+
+    ## Physical Drive Size
+    - name: cpqDaPhyDrvSize
+      oid: 1.3.6.1.4.1.232.3.2.5.1.1.45
+      type: gauge
+      help: Physical Drive Size in MB
+      indexes:
+      - labelname: controller
+        type: gauge
+        fixed_size: 1
+      - labelname: drive
+        type: gauge
+      lookups:
+      - labels:
+        - controller
+        - drive
+        labelname: location
+        oid: 1.3.6.1.4.1.232.3.2.5.1.1.64
+        type: DisplayString
+
+    ## Physical Drive Status
+    - name: cpqDaPhyDrvStatus
+      oid: 1.3.6.1.4.1.232.3.2.5.1.1.6
+      type: gauge
+      help: Physical Drive Status
+      indexes:
+      - labelname: controller
+        type: gauge
+        fixed_size: 1
+      - labelname: drive
+        type: gauge
+      lookups:
+      - labels:
+        - controller
+        - drive
+        labelname: location
+        oid: 1.3.6.1.4.1.232.3.2.5.1.1.64
+        type: DisplayString
+      enum_values:
+        1: other
+        2: ok
+        3: failed
+        4: Predictive Failure
+        5: Erasing
+        6: Erase Done
+        7: Erase Queued
+
+    ## Physical Drive Media Type
+    - name: cpqDaPhyDrvMediaType
+      oid: 1.3.6.1.4.1.232.3.2.5.1.1.69
+      type: gauge
+      help: Physical Drive Status
+      indexes:
+      - labelname: controller
+        type: gauge
+        fixed_size: 1
+      - labelname: drive
+        type: gauge
+      lookups:
+      - labels:
+        - controller
+        - drive
+        labelname: location
+        oid: 1.3.6.1.4.1.232.3.2.5.1.1.64
+        type: DisplayString
+      enum_values:
+        1: other
+        2: rotatingPlatters
+        3: solidState
+
+    ## Array Accelerator Battery Status
+    - name: cpqDaAccelBattery
+      oid: 1.3.6.1.4.1.232.3.2.2.2.1.6
+      type: gauge
+      help: Diskarray cache battery status
+      indexes:
+      - labelname: accelerator
+        type: gauge
+      enum_values:
+        1: other
+        2: ok
+        3: recharging
+        4: failed
+        5: degraded
+        6: notPersent
+
+    # Array Accelerator Condition
+    - name: cpqDaAccelCondition
+      oid: 1.3.6.1.4.1.232.3.2.2.2.1.9
+      type: gauge
+      help: Overall condition of this array accelerator
+      indexes:
+      - labelname: accelerator
+        type: gauge
+      enum_values:
+        1: other
+        2: ok
+        3: degraded
+        4: failed
+
+    # Array Accelerator Status
+    - name: cpqDaAccelStatus
+      oid: 1.3.6.1.4.1.232.3.2.2.2.1.2
+      type: gauge
+      help: Array Accelerator Board Status
+      indexes:
+      - labelname: accelerator
+        type: gauge
+      enum_values:
+        1: other
+        2: Invalid
+        3: Enabled
+        4: Temporarily Disabled
+        5: Permanently Disabled
+        6: Cache Module Flash Memory Not Attached
+        7: Cache Module Degraded Failsafe Speed
+        8: Cache Module Critical Failure
+        9: Read Cache Could Not Be Mapped
+
+    ## logical drive
+    - name: cpqDaLogDrvStatus
+      oid: 1.3.6.1.4.1.232.3.2.3.1.1.4
+      type: gauge
+      help: The status of the logical drive
+      indexes:
+      - labelname: controller
+        type: gauge
+      - labelname: logicaldrv
+        type: gauge
+      enum_values:
+        1: other
+        2: ok
+        3: failed
+        4: unconfigured
+        5: recovering
+        6: readyForRebuild
+        7: rebuilding
+        8: wrongDrive
+        9: badConnect
+        10: overheating
+        11: shutdown
+        12: expanding
+        13: notAvailable
+        14: queuedForExpansion
+        15: multipathAccessDegraded
+        16: erasing
+        17: predictiveSpareRebuildReady
+        18: rapidParityInitInProgress
+        19: rapidParityInitPending
+        20: noAccessEncrypted
+        21: unencryptedToEncrypted
+        22: newLogicalDriveKeyRekey
+        23: noAccessControllerEncryption
+        24: unencryptedToEncryptedNotStarted
+        25: newLogicalDriveKeyRekeyRequestReceived
+
+    # Logical Drive Condition
+    - name: cpqDaLogDrvCondition
+      oid: 1.3.6.1.4.1.232.3.2.3.1.1.11
+      type: gauge
+      help: The overall condition of the logical drive
+      indexes:
+      - labelname: controller
+        type: gauge
+      - labelname: logicaldrv
+        type: gauge
+      enum_values:
+        1: other
+        2: ok
+        3: degraded
+        4: failed
+
+    # Logical Drive Fault Tolerance
+    - name: cpqDaLogDrvFaultTol
+      oid: 1.3.6.1.4.1.232.3.2.3.1.1.3
+      type: gauge
+      help: The fault tolerance mode of the logical drive
+      indexes:
+      - labelname: controller
+        type: gauge
+      - labelname: logicaldrv
+        type: gauge
+      enum_values:
+        1: other
+        2: none
+        3: mirroring
+        4: dataGuard
+        5: distribDataGuard
+        7: advancedDataGuard
+        8: raid50
+        9: raid60
+        10: raid1Adm
+        11: raid10Adm
+
+    # Logical Drive Size
+    - name: cpqDaLogDrvSize
+      oid: 1.3.6.1.4.1.232.3.2.3.1.1.9
+      type: gauge
+      help: The size of the logical drive in megabytes
+      indexes:
+      - labelname: controller
+        type: gauge
+      - labelname: logicaldrv
+        type: gauge
