@@ -1,0 +1,3285 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_PROMETHEUS",
+      "label": "Prometheus",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "11.1.3"
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "1": {
+                  "index": 0,
+                  "text": "other"
+                },
+                "2": {
+                  "color": "semi-dark-green",
+                  "index": 1,
+                  "text": "ok"
+                },
+                "3": {
+                  "color": "semi-dark-yellow",
+                  "index": 2,
+                  "text": "recharging"
+                },
+                "4": {
+                  "color": "semi-dark-red",
+                  "index": 3,
+                  "text": "failed"
+                },
+                "5": {
+                  "color": "semi-dark-red",
+                  "index": 4,
+                  "text": "degraded"
+                },
+                "6": {
+                  "color": "light-blue",
+                  "index": 5,
+                  "text": "notPersent"
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "from": 7,
+                "result": {
+                  "color": "text",
+                  "index": 6,
+                  "text": "unknow"
+                },
+                "to": 100
+              },
+              "type": "range"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 3,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "cpqDaAccelBattery{instance=\"$server\"}",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "cache battery status",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/Time .*|.*name.*|instance.*|job.*|Value.*/"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/hp.*/"
+            },
+            "properties": [
+              {
+                "id": "custom.align",
+                "value": "center"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 3,
+        "y": 0
+      },
+      "id": 9,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "11.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "hpiLOsystemName{instance=\"$server\"}",
+          "format": "table",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "hpProductName{instance=\"$server\"}",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "interval": "",
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "hpiLOFirmwareVersion{instance=\"$server\"}",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "interval": "",
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "C"
+        }
+      ],
+      "title": "Server info",
+      "transformations": [
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "instance",
+            "mode": "outer"
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "deckbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 11,
+        "y": 0
+      },
+      "id": 12,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(cpqHeResMem2ModuleSize{instance=\"$server\"})",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Total Memory",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "1": {
+                  "color": "semi-dark-orange",
+                  "index": 1,
+                  "text": "Other"
+                },
+                "2": {
+                  "color": "green",
+                  "index": 0,
+                  "text": "Up"
+                },
+                "3": {
+                  "color": "semi-dark-green",
+                  "index": 2,
+                  "text": "Up"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 15,
+        "y": 0
+      },
+      "id": 14,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "hpiLOPowerMgmtStatus{instance=\"$server\"}",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Power Status",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "semi-dark-red",
+                  "index": 1,
+                  "text": "Down"
+                },
+                "1": {
+                  "color": "semi-dark-green",
+                  "index": 0,
+                  "text": "Up"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 18,
+        "y": 0
+      },
+      "id": 13,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "probe_success{instance=\"$server\",job=\"server_iLO_ping\"}",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Ping Status",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 21,
+        "y": 0
+      },
+      "id": 15,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "sysUpTime{instance=\"$server\"} /100",
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Uptime",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "1": {
+                  "index": 0,
+                  "text": "other"
+                },
+                "2": {
+                  "color": "text",
+                  "index": 1,
+                  "text": "invalid"
+                },
+                "3": {
+                  "color": "green",
+                  "index": 2,
+                  "text": "Enabled"
+                },
+                "4": {
+                  "color": "text",
+                  "index": 3,
+                  "text": "Temporarily disabled"
+                },
+                "5": {
+                  "color": "text",
+                  "index": 4,
+                  "text": "Permanently Disabled"
+                },
+                "6": {
+                  "index": 5,
+                  "text": "Cache Module Flash Memory Not Attached"
+                },
+                "7": {
+                  "index": 6,
+                  "text": "Cache Module Degraded Failsafe Speed"
+                },
+                "8": {
+                  "index": 7,
+                  "text": "Cache Module Critical Failure"
+                },
+                "9": {
+                  "index": 8,
+                  "text": "Read Cache Could Not Be Mapped"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 3,
+        "x": 0,
+        "y": 2
+      },
+      "id": 3,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "cpqDaAccelStatus{instance=\"$server\"}",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Write cache status",
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 4
+      },
+      "id": 22,
+      "panels": [],
+      "title": "Drives",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "left",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": false,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value #A"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "1": {
+                        "color": "text",
+                        "index": 0,
+                        "text": "other"
+                      },
+                      "2": {
+                        "color": "semi-dark-green",
+                        "index": 1,
+                        "text": "ok"
+                      },
+                      "3": {
+                        "color": "semi-dark-red",
+                        "index": 2,
+                        "text": "failed"
+                      },
+                      "4": {
+                        "color": "semi-dark-yellow",
+                        "index": 3,
+                        "text": "Predictive Failure"
+                      },
+                      "5": {
+                        "color": "semi-dark-blue",
+                        "index": 4,
+                        "text": "Erasing"
+                      },
+                      "6": {
+                        "color": "semi-dark-blue",
+                        "index": 5,
+                        "text": "Erase Done"
+                      },
+                      "7": {
+                        "color": "semi-dark-blue",
+                        "index": 6,
+                        "text": "Erase Queued"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value #A"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "custom.align",
+                "value": "center"
+              },
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value #B"
+            },
+            "properties": [
+              {
+                "id": "custom.align",
+                "value": "center"
+              },
+              {
+                "id": "unit",
+                "value": "decbytes"
+              },
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value #C"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "h"
+              },
+              {
+                "id": "custom.width",
+                "value": 150
+              },
+              {
+                "id": "custom.align",
+                "value": "center"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value #D"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "1": {
+                        "index": 0,
+                        "text": "other"
+                      },
+                      "2": {
+                        "index": 1,
+                        "text": "HDD"
+                      },
+                      "3": {
+                        "index": 2,
+                        "text": "SSD"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 100
+              },
+              {
+                "id": "custom.align",
+                "value": "center"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 5
+      },
+      "id": 4,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "11.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "cpqDaPhyDrvStatus{instance=\"$server\"}",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "cpqDaPhyDrvSize{instance=\"$server\"} * 1024*1024",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "cpqDaPhyDrvRefHours{instance=\"$server\"} ",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "cpqDaPhyDrvMediaType{instance=\"$server\"} ",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "D"
+        }
+      ],
+      "title": "Physical Drive",
+      "transformations": [
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "location",
+            "mode": "outer"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "Time 2": true,
+              "Time 3": true,
+              "__name__": true,
+              "__name__ 2": true,
+              "controller 1": true,
+              "controller 2": true,
+              "controller 3": true,
+              "controller 4": true,
+              "drive 1": true,
+              "drive 2": true,
+              "drive 3": true,
+              "drive 4": true,
+              "instance": true,
+              "instance 2": true,
+              "instance 3": true,
+              "job": true,
+              "job 2": true,
+              "job 3": true,
+              "name": true,
+              "name 2": true,
+              "name 3": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "Value": "Status",
+              "Value #A": "Status",
+              "Value #B": "Disk Size",
+              "Value #C": "Reference Time",
+              "Value #D": "Type"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "center",
+            "cellOptions": {
+              "type": "color-text"
+            },
+            "filterable": false,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "super-light-blue",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "controller.*"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Status"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "1": {
+                        "color": "yellow",
+                        "index": 0,
+                        "text": "Other"
+                      },
+                      "2": {
+                        "color": "green",
+                        "index": 1,
+                        "text": "OK"
+                      },
+                      "3": {
+                        "color": "red",
+                        "index": 2,
+                        "text": "Failed"
+                      },
+                      "4": {
+                        "color": "blue",
+                        "index": 3,
+                        "text": "Unconfigured"
+                      },
+                      "5": {
+                        "color": "blue",
+                        "index": 4,
+                        "text": "Recovering"
+                      },
+                      "6": {
+                        "color": "blue",
+                        "index": 5,
+                        "text": "ReadyForRebuild"
+                      },
+                      "7": {
+                        "color": "blue",
+                        "index": 6,
+                        "text": "Rebuilding"
+                      },
+                      "8": {
+                        "color": "blue",
+                        "index": 7,
+                        "text": "WrongDrive"
+                      },
+                      "9": {
+                        "color": "blue",
+                        "index": 8,
+                        "text": "BadConnect"
+                      },
+                      "10": {
+                        "color": "blue",
+                        "index": 9,
+                        "text": "Overheating"
+                      },
+                      "11": {
+                        "color": "blue",
+                        "index": 10,
+                        "text": "Shutdown"
+                      },
+                      "12": {
+                        "color": "blue",
+                        "index": 11,
+                        "text": "Expanding"
+                      },
+                      "13": {
+                        "color": "blue",
+                        "index": 12,
+                        "text": "NotAvailable"
+                      },
+                      "14": {
+                        "color": "blue",
+                        "index": 13,
+                        "text": "QueuedForExpansion"
+                      },
+                      "15": {
+                        "color": "blue",
+                        "index": 14,
+                        "text": "MultipathAccessDegraded"
+                      },
+                      "16": {
+                        "color": "blue",
+                        "index": 15,
+                        "text": "Erasing"
+                      },
+                      "17": {
+                        "color": "blue",
+                        "index": 16,
+                        "text": "PredictiveSpareRebuildReady"
+                      },
+                      "18": {
+                        "color": "blue",
+                        "index": 17,
+                        "text": "RapidParityInitInProgress"
+                      },
+                      "19": {
+                        "color": "blue",
+                        "index": 18,
+                        "text": "RapidParityInitPending"
+                      },
+                      "20": {
+                        "color": "blue",
+                        "index": 19,
+                        "text": "NoAccessEncrypted"
+                      },
+                      "21": {
+                        "color": "blue",
+                        "index": 20,
+                        "text": "UnencryptedToEncrypted"
+                      },
+                      "22": {
+                        "color": "blue",
+                        "index": 21,
+                        "text": "NewLogicalDriveKeyRekey"
+                      },
+                      "23": {
+                        "color": "blue",
+                        "index": 22,
+                        "text": "NoAccessControllerEncryption"
+                      },
+                      "24": {
+                        "color": "blue",
+                        "index": 23,
+                        "text": "UnencryptedToEncryptedNotStarted"
+                      },
+                      "25": {
+                        "color": "blue",
+                        "index": 24,
+                        "text": "NewLogicalDriveKeyRekeyRequestReceived"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "applyToRow": false,
+                  "mode": "gradient",
+                  "type": "color-background"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Condition"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "1": {
+                        "color": "yellow",
+                        "index": 0,
+                        "text": "Other"
+                      },
+                      "2": {
+                        "color": "green",
+                        "index": 1,
+                        "text": "OK"
+                      },
+                      "3": {
+                        "index": 2,
+                        "text": "Degraded"
+                      },
+                      "4": {
+                        "color": "red",
+                        "index": 3,
+                        "text": "Failed"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tolerance"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "1": {
+                        "color": "super-light-purple",
+                        "index": 0,
+                        "text": "Other"
+                      },
+                      "2": {
+                        "color": "red",
+                        "index": 1,
+                        "text": "None"
+                      },
+                      "3": {
+                        "color": "super-light-purple",
+                        "index": 2,
+                        "text": "Mirroring"
+                      },
+                      "4": {
+                        "color": "super-light-purple",
+                        "index": 3,
+                        "text": "DataGuard"
+                      },
+                      "5": {
+                        "color": "super-light-purple",
+                        "index": 4,
+                        "text": "DistribDataGuard"
+                      },
+                      "7": {
+                        "color": "super-light-purple",
+                        "index": 5,
+                        "text": "AdvancedDataGuard"
+                      },
+                      "8": {
+                        "color": "super-light-purple",
+                        "index": 6,
+                        "text": "Raid50"
+                      },
+                      "9": {
+                        "color": "super-light-purple",
+                        "index": 7,
+                        "text": "Raid60"
+                      },
+                      "10": {
+                        "color": "super-light-purple",
+                        "index": 8,
+                        "text": "Raid1Adm"
+                      },
+                      "11": {
+                        "color": "super-light-purple",
+                        "index": 9,
+                        "text": "Raid10Adm"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 151
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Size"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "decmbytes"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "applyToRow": false,
+                  "type": "color-background",
+                  "wrapText": false
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Number"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 70
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 5
+      },
+      "id": 25,
+      "options": {
+        "cellHeight": "md",
+        "footer": {
+          "countRows": false,
+          "enablePagination": false,
+          "fields": "",
+          "reducer": [
+            "lastNotNull"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "11.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "cpqDaLogDrvStatus{instance=\"$server\"}",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "drv {{logicaldrv}}",
+          "range": false,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "cpqDaLogDrvCondition{instance=\"$server\"}",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "drv {{logicaldrv}}",
+          "range": false,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "cpqDaLogDrvFaultTol{instance=\"$server\"}",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "drv {{logicaldrv}}",
+          "range": false,
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "cpqDaLogDrvSize{instance=\"$server\"}",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "drv {{logicaldrv}}",
+          "range": false,
+          "refId": "D"
+        }
+      ],
+      "title": "Logical Drive",
+      "transformations": [
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "logicaldrv",
+            "mode": "outer"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time 1": true,
+              "Time 2": true,
+              "Time 3": true,
+              "Time 4": true,
+              "__name__ 1": true,
+              "__name__ 2": true,
+              "__name__ 3": true,
+              "__name__ 4": true,
+              "controller 1": false,
+              "controller 2": false,
+              "controller 4": true,
+              "instance 1": true,
+              "instance 2": true,
+              "instance 3": true,
+              "instance 4": true,
+              "job 1": true,
+              "job 2": true,
+              "job 3": true,
+              "job 4": true,
+              "name 1": true,
+              "name 2": true,
+              "name 3": true,
+              "name 4": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "Time 3": "",
+              "Time 4": "",
+              "Value #A": "Status",
+              "Value #B": "Condition",
+              "Value #C": "Tolerance",
+              "Value #D": "Size",
+              "logicaldrv": "Number"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 13
+      },
+      "id": 23,
+      "panels": [],
+      "title": "Others",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/Time.*|job/*|instance.*|name.*/"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/.*Capacity.*/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "watt"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Condition"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "1": {
+                        "color": "text",
+                        "index": 0,
+                        "text": "other"
+                      },
+                      "2": {
+                        "color": "semi-dark-green",
+                        "index": 1,
+                        "text": "ok"
+                      },
+                      "3": {
+                        "color": "semi-dark-yellow",
+                        "index": 2,
+                        "text": "degraded"
+                      },
+                      "4": {
+                        "color": "semi-dark-red",
+                        "index": 3,
+                        "text": "failed"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "custom.align",
+                "value": "center"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Error Condition"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "1": {
+                        "color": "semi-dark-green",
+                        "index": 0,
+                        "text": "no Error"
+                      },
+                      "2": {
+                        "color": "semi-dark-red",
+                        "index": 1,
+                        "text": "generalFailure"
+                      },
+                      "3": {
+                        "color": "semi-dark-red",
+                        "index": 2,
+                        "text": "overvoltage"
+                      },
+                      "4": {
+                        "color": "semi-dark-orange",
+                        "index": 3,
+                        "text": "overcurrent"
+                      },
+                      "5": {
+                        "color": "semi-dark-orange",
+                        "index": 4,
+                        "text": "overtemperature"
+                      },
+                      "6": {
+                        "color": "semi-dark-red",
+                        "index": 5,
+                        "text": "powerinputloss"
+                      },
+                      "7": {
+                        "color": "semi-dark-red",
+                        "index": 6,
+                        "text": "fanfailure"
+                      },
+                      "8": {
+                        "color": "semi-dark-orange",
+                        "index": 7,
+                        "text": "vinhighwarning"
+                      },
+                      "9": {
+                        "color": "semi-dark-orange",
+                        "index": 8,
+                        "text": "vinlowwarning"
+                      },
+                      "10": {
+                        "color": "semi-dark-orange",
+                        "index": 9,
+                        "text": "vouthighwarning"
+                      },
+                      "11": {
+                        "color": "semi-dark-orange",
+                        "index": 10,
+                        "text": "voutlowwarning"
+                      },
+                      "12": {
+                        "color": "semi-dark-orange",
+                        "index": 11,
+                        "text": "inlettemphighwarning"
+                      },
+                      "13": {
+                        "color": "semi-dark-orange",
+                        "index": 12,
+                        "text": "iinternaltemphighwarning"
+                      },
+                      "14": {
+                        "color": "semi-dark-orange",
+                        "index": 13,
+                        "text": "vauxhighwarning"
+                      },
+                      "15": {
+                        "color": "semi-dark-orange",
+                        "index": 14,
+                        "text": "vauxlowwarning"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "custom.align",
+                "value": "center"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Present"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "1": {
+                        "color": "text",
+                        "index": 0,
+                        "text": "other"
+                      },
+                      "2": {
+                        "color": "light-blue",
+                        "index": 1,
+                        "text": "absent"
+                      },
+                      "3": {
+                        "color": "semi-dark-green",
+                        "index": 2,
+                        "text": "present"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "custom.align",
+                "value": "center"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/.*Capacity|Voltage.*/"
+            },
+            "properties": [
+              {
+                "id": "custom.align",
+                "value": "center"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Status"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "1": {
+                        "index": 0,
+                        "text": "noError"
+                      },
+                      "2": {
+                        "index": 1,
+                        "text": "generalFailure"
+                      },
+                      "3": {
+                        "index": 2,
+                        "text": "bistFailure"
+                      },
+                      "4": {
+                        "index": 3,
+                        "text": "fanFailure"
+                      },
+                      "5": {
+                        "index": 4,
+                        "text": "tempFailure"
+                      },
+                      "6": {
+                        "index": 5,
+                        "text": "interlockOpen"
+                      },
+                      "7": {
+                        "index": 6,
+                        "text": "epromFailed"
+                      },
+                      "8": {
+                        "index": 7,
+                        "text": "vrefFailed"
+                      },
+                      "9": {
+                        "index": 8,
+                        "text": "dacFailed"
+                      },
+                      "10": {
+                        "index": 9,
+                        "text": "ramTestFailed"
+                      },
+                      "11": {
+                        "index": 10,
+                        "text": "voltageChannelFailed"
+                      },
+                      "12": {
+                        "index": 11,
+                        "text": "orringdiodeFailed"
+                      },
+                      "13": {
+                        "index": 12,
+                        "text": "brownOut"
+                      },
+                      "14": {
+                        "index": 13,
+                        "text": "giveupOnStartup"
+                      },
+                      "15": {
+                        "index": 14,
+                        "text": "nvramInvalid"
+                      },
+                      "16": {
+                        "index": 15,
+                        "text": "calibrationTableInvalid"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.align",
+                "value": "center"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 14
+      },
+      "id": 6,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "11.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "cpqHeFltTolPowerSupplyCapacityMaximum{instance=\"$server\"}",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "cpqHeFltTolPowerSupplyCapacityUsed{instance=\"$server\"}",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "cpqHeFltTolPowerSupplyMainVoltage{instance=\"$server\"}",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "cpqHeFltTolPowerSupplyCondition{instance=\"$server\"}",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "cpqHeFltTolPowerSupplyErrorCondition{instance=\"$server\"}",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "cpqHeFltTolPowerSupplyPresent{instance=\"$server\"}",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "Present"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "cpqHeFltTolPowerSupplyStatus{instance=\"$server\"}",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "Status"
+        }
+      ],
+      "title": "Power Module",
+      "transformations": [
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "bay",
+            "mode": "outer"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": false
+            },
+            "indexByName": {},
+            "renameByName": {
+              "Value #A": "Capacity",
+              "Value #B": "Used Capacity",
+              "Value #C": "Condition",
+              "Value #Capacity": "Condition",
+              "Value #D": "Error Condition",
+              "Value #E": "Voltage",
+              "Value #F": "Present",
+              "Value #G": "Status",
+              "Value #Present": "Present",
+              "Value #Status": "Status",
+              "bay": "bay",
+              "instance 2": "",
+              "instance 3": "",
+              "job 2": "",
+              "name 2": ""
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Condition"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "1": {
+                        "color": "text",
+                        "index": 0,
+                        "text": "other"
+                      },
+                      "2": {
+                        "color": "semi-dark-green",
+                        "index": 1,
+                        "text": "ok"
+                      },
+                      "3": {
+                        "color": "semi-dark-red",
+                        "index": 2,
+                        "text": "degraded"
+                      },
+                      "4": {
+                        "color": "semi-dark-red",
+                        "index": 3,
+                        "text": "failed"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Condition"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "custom.align",
+                "value": "center"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Presence"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "1": {
+                        "color": "text",
+                        "index": 0,
+                        "text": "other"
+                      },
+                      "2": {
+                        "index": 1,
+                        "text": "absent"
+                      },
+                      "3": {
+                        "color": "semi-dark-green",
+                        "index": 2,
+                        "text": "present"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Presence"
+            },
+            "properties": [
+              {
+                "id": "custom.align",
+                "value": "center"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 9,
+        "x": 0,
+        "y": 21
+      },
+      "id": 5,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "11.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "cpqHeFltTolFanCondition{instance=\"$server\"}",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "cpqHeFltTolFanPresent{instance=\"$server\"}",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "B"
+        }
+      ],
+      "title": "Fans",
+      "transformations": [
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "fanID",
+            "mode": "outer"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "Time 2": true,
+              "__name__": true,
+              "__name__ 2": true,
+              "instance": true,
+              "instance 2": true,
+              "job": true,
+              "job 2": true,
+              "name": true,
+              "name 2": true
+            },
+            "indexByName": {},
+            "renameByName": {
+              "Value": "Status",
+              "Value #A": "Condition",
+              "Value #B": "Presence"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value #A"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "1": {
+                        "index": 0,
+                        "text": "other"
+                      },
+                      "2": {
+                        "index": 1,
+                        "text": "notPresent"
+                      },
+                      "3": {
+                        "index": 2,
+                        "text": "present"
+                      },
+                      "4": {
+                        "color": "semi-dark-green",
+                        "index": 3,
+                        "text": "good"
+                      },
+                      "5": {
+                        "index": 4,
+                        "text": "add"
+                      },
+                      "6": {
+                        "index": 5,
+                        "text": "upgrade"
+                      },
+                      "7": {
+                        "index": 6,
+                        "text": "missing"
+                      },
+                      "8": {
+                        "index": 7,
+                        "text": "doesNotMatch"
+                      },
+                      "9": {
+                        "index": 8,
+                        "text": "notSupported"
+                      },
+                      "10": {
+                        "index": 9,
+                        "text": "badConfig"
+                      },
+                      "11": {
+                        "index": 10,
+                        "text": "degraded"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.align",
+                "value": "center"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value #B"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "1": {
+                        "color": "text",
+                        "index": 0,
+                        "text": "other"
+                      },
+                      "2": {
+                        "color": "green",
+                        "index": 1,
+                        "text": "ok"
+                      },
+                      "3": {
+                        "color": "semi-dark-red",
+                        "index": 2,
+                        "text": "degraded"
+                      },
+                      "4": {
+                        "color": "semi-dark-red",
+                        "index": 3,
+                        "text": "degradedModuleIndexUnknown"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.align",
+                "value": "center"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value #C"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "deckbytes"
+              },
+              {
+                "id": "custom.width",
+                "value": 120
+              },
+              {
+                "id": "custom.align",
+                "value": "center"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 19,
+        "w": 7,
+        "x": 9,
+        "y": 21
+      },
+      "id": 7,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Condition"
+          }
+        ]
+      },
+      "pluginVersion": "11.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "cpqHeResMem2ModuleStatus{instance=\"$server\"}",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "cpqHeResMem2ModuleCondition{instance=\"$server\"}",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "cpqHeResMem2ModuleSize{instance=\"$server\"}",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "C"
+        }
+      ],
+      "title": "Memory",
+      "transformations": [
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "location",
+            "mode": "outer"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "Time 2": true,
+              "__name__": true,
+              "__name__ 2": true,
+              "instance": true,
+              "instance 2": true,
+              "job": true,
+              "job 2": true,
+              "name": true,
+              "name 2": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "Value": "Status",
+              "Value #A": "Condition",
+              "Value #B": "Status",
+              "Value #C": "Size"
+            }
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "notEqual",
+                  "options": {
+                    "value": 2
+                  }
+                },
+                "fieldName": "Condition"
+              }
+            ],
+            "match": "any",
+            "type": "include"
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "description": "degraded: The temperature sensor is outside of normal operating range\n\nfailed: The temperature sensor detects a condition that could permanently damage the system",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/Time.*|instance.*|name.*|job.*|locale [2-3]/"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value #A"
+            },
+            "properties": [
+              {
+                "id": "custom.align",
+                "value": "center"
+              },
+              {
+                "id": "unit",
+                "value": "celsius"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value #B"
+            },
+            "properties": [
+              {
+                "id": "custom.align",
+                "value": "center"
+              },
+              {
+                "id": "unit",
+                "value": "celsius"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value #C"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "1": {
+                        "color": "text",
+                        "index": 0,
+                        "text": "other"
+                      },
+                      "2": {
+                        "color": "semi-dark-green",
+                        "index": 1,
+                        "text": "ok"
+                      },
+                      "3": {
+                        "color": "semi-dark-orange",
+                        "index": 2,
+                        "text": "degraded"
+                      },
+                      "4": {
+                        "color": "semi-dark-red",
+                        "index": 3,
+                        "text": "failed"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.align",
+                "value": "center"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "color-background"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "sensorID"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 50
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/locale.*/"
+            },
+            "properties": [
+              {
+                "id": "custom.align",
+                "value": "center"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "1": {
+                        "index": 0,
+                        "text": "other"
+                      },
+                      "2": {
+                        "index": 1,
+                        "text": "unknown"
+                      },
+                      "3": {
+                        "index": 2,
+                        "text": "system"
+                      },
+                      "4": {
+                        "index": 3,
+                        "text": "systemBoard"
+                      },
+                      "5": {
+                        "index": 4,
+                        "text": "ioBoard"
+                      },
+                      "6": {
+                        "index": 5,
+                        "text": "cpu"
+                      },
+                      "7": {
+                        "index": 6,
+                        "text": "memory"
+                      },
+                      "8": {
+                        "index": 7,
+                        "text": "storage"
+                      },
+                      "9": {
+                        "index": 8,
+                        "text": "removableMedia"
+                      },
+                      "10": {
+                        "index": 9,
+                        "text": "powerSupply"
+                      },
+                      "11": {
+                        "index": 10,
+                        "text": "Ambient"
+                      },
+                      "12": {
+                        "index": 11,
+                        "text": "chassis"
+                      },
+                      "13": {
+                        "index": 12,
+                        "text": "bridgeCard"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 19,
+        "w": 8,
+        "x": 16,
+        "y": 21
+      },
+      "id": 10,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Condition"
+          }
+        ]
+      },
+      "pluginVersion": "11.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "cpqHeTemperatureThreshold{instance=\"$server\"} ",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "cpqHeTemperatureCelsius{instance=\"$server\"}",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "cpqHeTemperatureCondition{instance=\"$server\"}",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "C"
+        }
+      ],
+      "title": "Temperature",
+      "transformations": [
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "sensorID",
+            "mode": "outer"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "locale 2": false,
+              "locale 3": false
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "Value #A": "Thereshold",
+              "Value #B": "Temperature",
+              "Value #C": "Condition"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value #A"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "1": {
+                        "color": "text",
+                        "index": 0,
+                        "text": "other"
+                      },
+                      "2": {
+                        "color": "semi-dark-green",
+                        "index": 1,
+                        "text": "ok"
+                      },
+                      "3": {
+                        "color": "semi-dark-red",
+                        "index": 2,
+                        "text": "degraded"
+                      },
+                      "4": {
+                        "color": "semi-dark-red",
+                        "index": 3,
+                        "text": "failed"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "id"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 9,
+        "x": 0,
+        "y": 30
+      },
+      "id": 16,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "11.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "cpqNicIfPhysAdapterStatus{instance=\"$server\"}",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "changes(cpqNicIfPhysAdapterStatus{instance=\"$server\"}[$__range])",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "B"
+        }
+      ],
+      "title": "NIC",
+      "transformations": [
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "id",
+            "mode": "outer"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "Time 2": true,
+              "__name__": true,
+              "__name__ 2": true,
+              "instance": true,
+              "instance 2": true,
+              "job": true,
+              "job 2": true,
+              "location 2": true,
+              "name": true,
+              "name 2": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "Value": "Status",
+              "Value #A": "Condition",
+              "Value #B": "changes"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 40
+      },
+      "id": 17,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "cpqHeTemperatureCelsius{instance=\"$server\", locale=\"11\"}",
+          "instant": false,
+          "legendFormat": "{{sensorID}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Ambient temperature ",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 39,
+  "tags": [
+    "version 1.4"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {},
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
+        "definition": "label_values(hpProductName,instance)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "server",
+        "multi": false,
+        "name": "server",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(hpProductName,instance)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "iLO",
+  "uid": "fc48909d-26ed-4b5c-9010-af12a2768d2a",
+  "version": 65,
+  "weekStart": ""
+}
