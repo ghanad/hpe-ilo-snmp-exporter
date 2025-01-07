@@ -4,7 +4,7 @@ SNMP Exporter configuration for HPE iLO servers - monitoring hardware status, po
 
 ## Overview
 
-This repository contains SNMP exporter configuration for monitoring HPE servers through their iLO interface. It enables comprehensive hardware monitoring including:
+This repository contains SNMP exporter configuration for monitoring HPE servers through their iLO interface. This configuration has been tested and verified to work on HPE Gen9 and Gen10 servers. It enables comprehensive hardware monitoring including:
 
 - System overall health
 - Power supplies status and metrics
